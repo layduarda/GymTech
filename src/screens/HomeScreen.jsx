@@ -1,9 +1,9 @@
-import { Image, StyleSheet, View, Text, Touchable } from 'react-native'
-import React from 'react'
-import { colors } from '../utils/colors'
-import { fonts } from '../utils/fonts'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import { useNavigation } from '@react-navigation/native'
+import { Image, StyleSheet, View, Text, Touchable } from 'react-native';
+import React from 'react';
+import { colors } from '../utils/colors';
+import { fonts } from '../utils/fonts';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
     const navigation = useNavigation()
@@ -26,10 +26,10 @@ const HomeScreen = () => {
                 ]}
                 onPress={handleLogin}
                 >
-                <Text style={styles.loginButtonText}>Acessar</Text>
+                <Text style={styles.loginButtonText}>Login</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.loginButtonWrapper}>
-                <Text style={styles.signupButtonText}>Cadastrar</Text>
+            <TouchableOpacity style={styles.signupButtonWrapper}>
+                <Text style={styles.signupButtonText}>Sign-up</Text>
             </TouchableOpacity>
         </View>
     </View>
@@ -81,17 +81,27 @@ const styles = StyleSheet.create({
     loginButtonWrapper: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: "50%",
+        width: "100%",
         backgroundColor: colors.primary,
-        borderRadius: 98,
+        borderRadius: "98%",
+        padding: 18,
     },
     loginButtonText: {
     color: colors.white,
     fontSize: 18,
     fontFamily: fonts.SemiBold,
     },
+    signupButtonWrapper: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: "100%",
+        backgroundColor: colors.white,
+        borderRadius: "98%",
+        padding: 18,
+    },
     signupButtonText: {
         fontSize: 18,
         fontFamily: fonts.SemiBold,
+        backcolor: colors.secondary,
     },
 });
