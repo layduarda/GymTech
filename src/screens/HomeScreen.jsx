@@ -1,39 +1,46 @@
-import { Image, StyleSheet, View, Text, Touchable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { colors } from '../utils/colors';
 import { fonts } from '../utils/fonts';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
     const navigation = useNavigation()
     const handleLogin = () => {
         navigation.navigate("login")
-    }
-  return (
-    <View style={styles.container}>
-        <Image source={require("../assets/logo.png")} style={styles.logo}/>
-        <Image source={require("../assets/Image.png")} style={styles.bannerImage} />
-        <Text style={styles.titulo}>Lorem, ipsum dolor.</Text>
-        <Text style={styles.subTitle}>Lorem ipsum dolor sit 
-            amet consectetur adipisicing elit. Doloribus ex 
-            officiis molestiae architecto voluptate itaque.
-        </Text>
-        <View style={styles.buttonHomeS}>
-            <TouchableOpacity 
-            style={[styles.loginButtonWrapper, 
-                {backgroundColor: colors.primary},
-                ]}
-                onPress={handleLogin}
+    };
+
+    const handleSignUp = () => {
+        navigation.navigate("signup")
+    };
+
+    return (
+        <View style={styles.container}>
+            <Image source={require("../assets/logo.png")} style={styles.logo} />
+            <Image source={require("../assets/Image.png")} style={styles.bannerImage} />
+            <Text style={styles.titulo}>Olá, seja bem-vindo!</Text>
+            <Text style={styles.subTitle}>Acesse nosso software e desfrute de todos os seus recursos, para uma melhor
+                experiência e qualidade de vida.
+            </Text>
+            <View style={styles.buttonHomeS}>
+                <TouchableOpacity
+                    style={[styles.loginButtonWrapper,
+                    { backgroundColor: colors.primary },
+                    ]}
+                    onPress={handleLogin}
                 >
-                <Text style={styles.loginButtonText}>Login</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.signupButtonWrapper}>
-                <Text style={styles.signupButtonText}>Sign-up</Text>
-            </TouchableOpacity>
+                    <Text style={styles.loginButtonText}>Login</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.signupButtonWrapper}
+                    onPress={handleSignUp}
+                >
+                    <Text style={styles.signupButtonText}>Sign-up</Text>
+                </TouchableOpacity>
+            </View>
         </View>
-    </View>
-  )
+    )
 }
 
 export default HomeScreen
@@ -63,7 +70,7 @@ const styles = StyleSheet.create({
         marginTop: 40,
     },
     subTitle: {
-        fontSize: 20,
+        fontSize: 19,
         textAlign: 'center',
         color: colors.secondary,
         fontFamily: fonts.Medium,
@@ -82,14 +89,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: "100%",
+        height: "100%",
         backgroundColor: colors.primary,
-        borderRadius: "98%",
-        padding: 18,
+        borderRadius: "100%",
+        padding: 16,
     },
     loginButtonText: {
-    color: colors.white,
-    fontSize: 18,
-    fontFamily: fonts.SemiBold,
+        color: colors.white,
+        fontSize: 18,
+        fontFamily: fonts.SemiBold,
     },
     signupButtonWrapper: {
         justifyContent: 'center',
@@ -97,11 +105,11 @@ const styles = StyleSheet.create({
         width: "100%",
         backgroundColor: colors.white,
         borderRadius: "98%",
-        padding: 18,
+        padding: 16,
     },
     signupButtonText: {
         fontSize: 18,
         fontFamily: fonts.SemiBold,
-        backcolor: colors.secondary,
+        color: colors.secondary,
     },
 });
