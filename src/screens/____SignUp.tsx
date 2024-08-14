@@ -13,9 +13,6 @@ import { background } from "native-base/lib/typescript/theme/styled-system";
 const SignupScreen = () => {
   const navigation = useNavigation();
   const [secureEntery, setSecureEntery] = useState(true);
-  const handleHome = () => {
-    navigation.navigate("home")
-  };
 
   const handleGoBack = () => {
     navigation.goBack();
@@ -98,7 +95,6 @@ const SignupScreen = () => {
         style={[styles.loginButtonWrapper,
           {backgroundColor: colors.primary},
         ]}
-        onPress={handleHome}
         >
           <Text style={styles.loginText}>Cadastrar</Text>
         </TouchableOpacity>
