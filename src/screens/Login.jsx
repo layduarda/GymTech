@@ -2,42 +2,68 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import { Image } from 'react-native-svg';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from "../services/firebaseConfig";
 
 import { colors } from '../utils/colors';
 import { fonts } from '../utils/fonts';
 
-const Login = () => {
+const LoginScreen = () => {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  const handleLogin = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+
+        console.log(user);
+        setUser(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        console.log(errorMessage);
+      });
+  }
+
   const navigation = useNavigation();
   const [secureEnter, setSecureEnter] = useState(true);
-  const handleHome = () => {
-    navigation.navigate("home")
+  const handleHomeTab = () => {
+    navigation.navigate('HomeTab')
   };
 
   const handleGoBack = () => {
     navigation.goBack();
   };
+
+  const handleSignUp = () => {
+    navigation.navigate('SignUp')
+  };
+
   return (
     <View style={styles.containerL}>
       <TouchableOpacity style={styles.backButton}
         onPress={handleGoBack}
       >
         <Ionicons name={"arrow-back-outline"}
-          color={colors.primary}
+          color={colors.setaBack}
           size={25}
         />
       </TouchableOpacity>
+
       <View style={styles.textContainer}>
         <Text style={styles.headingText}>Olá,</Text>
         <Text style={styles.headingText}>bem-vindo</Text>
         <Text style={styles.headingText}>de volta!</Text>
       </View>
-      {/* form */}
+
       <View style={styles.formContainer}>
         <View style={styles.inputLogin}>
-          <Ionicons name={"mail-outline"} size={30}
+          <Ionicons name={"mail-outline"} size={25}
             color={colors.secondary} />
           <TextInput style={styles.textInput}
             placeholder="Insira seu email"
@@ -47,7 +73,7 @@ const Login = () => {
         </View>
 
         <View style={styles.inputLogin}>
-          <SimpleLineIcons name={"lock"} size={30}
+          <Ionicons name={"lock-closed-outline"} size={25}
             color={colors.secondary} />
           <TextInput style={styles.textInput}
             placeholder="Insira sua senha"
@@ -59,39 +85,54 @@ const Login = () => {
               setSecureEnter((prev) => !prev);
             }}
           >
-            <SimpleLineIcons name={"eye"} size={20} color={
+            <Ionicons name={"eye-off-outline"} size={20} color={
               colors.secondary} />
           </TouchableOpacity>
         </View>
+
         <TouchableOpacity>
           <Text style={styles.forgotPasswordText}>Esqueceu sua senha?</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-        style={[styles.loginButtonWrapper,
-          {backgroundColor: colors.primary},
-        ]}
-        onPress={handleHome}
+
+        <TouchableOpacity
+          style={[styles.loginButtonWrapperL,
+          ]}
+          onPress={handleLogin}
         >
           <Text style={styles.loginText}>Acessar</Text>
         </TouchableOpacity>
+
         <Text style={styles.continueText}>
           ou continue com
         </Text>
 
         <TouchableOpacity style={styles.googleButtonContainer}>
-          <Image source={require("../assets/Vector.png")} style={styles.googleImage} />
+          <Ionicons
+            name={"logo-google"}
+            size={30}
+            color={colors.secondary}
+          />
           <Text style={styles.googleText}>Google</Text>
         </TouchableOpacity>
+
         <View style={styles.footerContainer}>
           <Text style={styles.accountText}>Não possui uma conta?</Text>
-          <Text style={styles.signupText}>Cadastre-se</Text>
+
+          <TouchableOpacity
+            style={[styles.signupC,
+            ]}
+            onPress={handleSignUp}
+          >
+            <Text style={styles.signupText}>Cadastre-se</Text>
+          </TouchableOpacity>
         </View>
+
       </View>
     </View>
   );
 };
 
-export default Login
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   containerL: {
@@ -102,7 +143,6 @@ const styles = StyleSheet.create({
   backButton: {
     height: 40,
     width: 40,
-    backgroundColor: colors.gray,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -112,7 +152,7 @@ const styles = StyleSheet.create({
   },
   headingText: {
     fontSize: 30,
-    color: colors.primary,
+    color: colors.bottom1,
     fontFamily: fonts.Medium,
   },
   formContainer: {
@@ -125,8 +165,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     flexDirection: "row",
     alignItems: 'center',
-    padding: 2,
-    marginVertical: 20,
+    padding: 6,
+    marginVertical: 17,
   },
   textInput: {
     flex: 1,
@@ -139,8 +179,10 @@ const styles = StyleSheet.create({
     fontFamily: fonts.SemiBold,
     marginVertical: 10,
   },
-  loginButtonWrapper: {
-    backgroundColor: colors.primary,
+  loginButtonWrapperL: {
+    borderWidth: 1,
+    borderColor: colors.bottom1,
+    backgroundColor: colors.bottom2,
     borderRadius: 100,
     marginTop: 20,
   },
@@ -158,14 +200,22 @@ const styles = StyleSheet.create({
     fontFamily: fonts.Regular,
     color: colors.primary,
   },
+  continueText: {
+    textAlign: "center",
+    marginVertical: 20,
+    fontSize: 14,
+    fontFamily: fonts.Regular,
+    color: colors.primary,
+  },
   googleButtonContainer: {
-    flexDirection: 'row',
-    borderWidth: 2,
-    borderColor: colors.primary,
+    flexDirection: "row",
+    borderWidth: 1,
+    borderColor: colors.secondary,
     borderRadius: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 10,
+    gap: 10,
   },
   googleImage: {
     height: 20,
@@ -185,9 +235,14 @@ const styles = StyleSheet.create({
   accountText: {
     color: colors.primary,
     fontFamily: fonts.Regular,
+    marginTop: 20,
+    fontSize: 15,
+  },
+  signupC: {
+    marginTop: 20,
   },
   signupText: {
-    color: colors.primary,
-    fontFamily: fonts.Bold,
+    fontSize: 18,
+    color: colors.bottom1,
   },
 });

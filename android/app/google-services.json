@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "947094028337",
+    "project_id": "authentication-gymtech-c54fe",
+    "storage_bucket": "authentication-gymtech-c54fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947094028337:android:c34c4d2c88fd6750db5510",
+        "android_client_info": {
+          "package_name": "dev.ecavalcanti.GymTech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANMbUDPmnP0CJznQVj0KP2LUncTxSUu8w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

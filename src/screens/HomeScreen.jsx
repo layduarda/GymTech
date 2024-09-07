@@ -17,23 +17,25 @@ const HomeScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Image source={require("../assets/logo.png")} style={styles.logo} />
             <Image source={require("../assets/Image.png")} style={styles.bannerImage} />
             <Text style={styles.titulo}>Olá, seja bem-vindo!</Text>
             <Text style={styles.subTitle}>Acesse nosso software e desfrute de todos os seus recursos, para uma melhor
                 experiência e qualidade de vida.
             </Text>
+
             <View style={styles.buttonHomeS}>
                 <TouchableOpacity
                     style={[styles.loginButtonWrapper,
-                    { backgroundColor: colors.primary },
+                    { backgroundColor: colors.bottom2},
+                    {width: "100%"},
                     ]}
                     onPress={handleLogin}
                 >
                     <Text style={styles.loginButtonText}>Login</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={styles.signupButtonWrapper}
+                    style={[styles.signupButtonWrapper,
+                    ]}
                     onPress={handleSignUp}
                 >
                     <Text style={styles.signupButtonText}>Sign-up</Text>
@@ -51,36 +53,33 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         alignItems: 'center',
     },
-    logo: {
-        height: 40,
-        width: 140,
-        marginVertical: 40,
-    },
     bannerImage: {
-        width: 230,
+        width: 400,
         height: 250,
-        marginVertical: 20,
+        marginVertical: 10,
+        marginTop: 90,
     },
     titulo: {
         fontSize: 30,
         fontFamily: fonts.SemiBold,
         paddingHorizontal: 20,
         textAlign: 'center',
-        color: colors.primary,
+        color: colors.bottom1,
         marginTop: 40,
     },
     subTitle: {
-        fontSize: 19,
+        fontSize: 18,
         textAlign: 'center',
         color: colors.secondary,
         fontFamily: fonts.Medium,
         marginVertical: 20,
+        padding: 15,
     },
     buttonHomeS: {
         flexDirection: "row",
         marginTop: 20,
-        borderWidth: 2,
-        borderColor: colors.primary,
+        borderWidth: 1,
+        borderColor: colors.bottom2,
         width: "80%",
         height: 60,
         borderRadius: 100,
@@ -90,9 +89,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: "100%",
         height: "100%",
-        backgroundColor: colors.primary,
-        borderRadius: "100%",
         padding: 16,
+        backgroundColor: colors.purple,
     },
     loginButtonText: {
         color: colors.white,
@@ -104,12 +102,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: "100%",
         backgroundColor: colors.white,
-        borderRadius: "98%",
         padding: 16,
+        marginLeft: 70,
     },
     signupButtonText: {
         fontSize: 18,
         fontFamily: fonts.SemiBold,
-        color: colors.secondary,
+        color: colors.purple,
     },
 });
