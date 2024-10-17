@@ -6,14 +6,16 @@ import { fonts } from "../utils/fonts";
 
 import { useNavigation } from "@react-navigation/native";
 
-// const handleArtOne = () => {
-//     //@ts-ignore
-//     navigation.navigate('artigo1')
-// };
+
 
 export function ListaHorizontal() {
     const navigation = useNavigation();
     const [secureEntery, setSecureEntery] = useState(true);
+
+    const handleArtOne = () => {
+        //@ts-ignore
+        navigation.navigate('artigo1')
+    };
 
     return (
         <View>
@@ -30,7 +32,7 @@ export function ListaHorizontal() {
                 style={styles.containerArtigos}>
                 <TouchableOpacity style={[styles.cardArt,
                 styles.cardHorizontal]}
-                // onPress={handleArtOne}
+                    onPress={handleArtOne}
                 >
                     <Text style={styles.textCard}>
                         O que é musculação?
