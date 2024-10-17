@@ -5,13 +5,15 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { colors } from '../utils/colors';
 import { fonts } from '../utils/fonts';
 
-const HomeScreen = () => {
+export const WelcomeScreen = () => {
     const navigation = useNavigation()
     const handleLogin = () => {
+        //@ts-ignore
         navigation.navigate("login")
     };
 
     const handleSignUp = () => {
+        //@ts-ignore
         navigation.navigate("signup")
     };
 
@@ -26,8 +28,8 @@ const HomeScreen = () => {
             <View style={styles.buttonHomeS}>
                 <TouchableOpacity
                     style={[styles.loginButtonWrapper,
-                    { backgroundColor: colors.bottom2},
-                    {width: "100%"},
+                    { backgroundColor: colors.roxo2 },
+                    { width: "180%" },
                     ]}
                     onPress={handleLogin}
                 >
@@ -44,8 +46,6 @@ const HomeScreen = () => {
         </View>
     )
 }
-
-export default HomeScreen
 
 const styles = StyleSheet.create({
     container: {
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         fontFamily: fonts.SemiBold,
         paddingHorizontal: 20,
         textAlign: 'center',
-        color: colors.bottom1,
+        color: colors.roxo1,
         marginTop: 40,
     },
     subTitle: {
@@ -79,8 +79,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginTop: 20,
         borderWidth: 1,
-        borderColor: colors.bottom2,
-        width: "80%",
+        borderColor: colors.roxo2,
+        width: "90%",
         height: 60,
         borderRadius: 100,
     },
@@ -90,7 +90,8 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         padding: 16,
-        backgroundColor: colors.purple,
+        backgroundColor: colors.roxo4,
+        borderRadius: 100,
     },
     loginButtonText: {
         color: colors.white,
@@ -100,14 +101,15 @@ const styles = StyleSheet.create({
     signupButtonWrapper: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: "100%",
+        width: "90%",
         backgroundColor: colors.white,
         padding: 16,
-        marginLeft: 70,
+        marginLeft: 90,
+        borderRadius: 100,
     },
     signupButtonText: {
         fontSize: 18,
         fontFamily: fonts.SemiBold,
-        color: colors.purple,
+        color: colors.roxo4,
     },
 });

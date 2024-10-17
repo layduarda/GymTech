@@ -9,6 +9,7 @@
     "plugins": [
       [
         "expo-font",
+        
         {
           "fonts": [
             "./src/assets/fonts/Poppins-ExtraBold.ttf",

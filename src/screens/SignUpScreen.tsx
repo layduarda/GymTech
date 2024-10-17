@@ -1,20 +1,46 @@
-import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "../firebase";
 import { colors } from "../utils/colors";
 import { fonts } from "../utils/fonts";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { useNavigation } from "@react-navigation/native";
-import { HomeTabProp } from "../../types";
-
-const SignupScreen = () => {
-    const navigation = useNavigation<HomeTabProp>();
+export const SignUpScreen = () => {
+    const navigation = useNavigation();
     const [secureEntery, setSecureEntery] = useState(true);
 
-    const handleHomeTab = () => {
-        navigation.navigate('HomeTab')
+    // State for form fields
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+
+    const handleFichaI = async () => {
+        let user = null;
+
+        try {
+            const res = await createUserWithEmailAndPassword(auth, email, password);
+            user = res.user;
+        } catch (e) {
+            console.error(e);
+            // TODO: Implementar mensagem de erro para o usuário
+        }
+
+        try {
+            await updateProfile(user, {
+                displayName: name,
+            });
+
+            //@ts-ignore
+            navigation.navigate('main')
+        } catch (e) {
+            console.error(e);
+            // TODO: Implementar mensagem de erro para o usuário
+        }
     };
 
     const handleGoBack = () => {
@@ -22,7 +48,9 @@ const SignupScreen = () => {
     };
 
     const handleLogin = () => {
-        //navigation.navigate("login")
+        // navigation.navigate()
+        // @ts-ignore
+        navigation.navigate("login")
     };
 
     return (
@@ -30,7 +58,7 @@ const SignupScreen = () => {
             <TouchableOpacity style={styles.backButtonWrapper} onPress={handleGoBack}>
                 <Ionicons
                     name={"arrow-back-outline"}
-                    color={colors.setaBack}
+                    color={colors.laranjaDetalhe}
                     size={25}
                 />
             </TouchableOpacity>
@@ -51,23 +79,9 @@ const SignupScreen = () => {
                     <TextInput
                         style={styles.textInput}
                         placeholder="Insira seu nome completo"
+                        onChangeText={setName}
                         placeholderTextColor={colors.secondary}
                         keyboardType="name-phone-pad"
-                    />
-                </View>
-
-                <View style={styles.inputContainer}>
-                    <Ionicons
-                        name={"phone-portrait-outline"}
-                        size={30}
-                        color={colors.secondary}
-                    />
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder="Insira seu número de telefone"
-                        placeholderTextColor={colors.secondary}
-                        secureTextEntry={secureEntery}
-                        keyboardType="phone-pad"
                     />
                 </View>
 
@@ -76,8 +90,10 @@ const SignupScreen = () => {
                     <TextInput
                         style={styles.textInput}
                         placeholder="Insira seu email"
+                        inputMode="email"
                         placeholderTextColor={colors.secondary}
                         keyboardType="email-address"
+                        onChangeText={setEmail}
                     />
                 </View>
 
@@ -85,9 +101,10 @@ const SignupScreen = () => {
                     <Ionicons name={"lock-closed-outline"} size={30} color={colors.secondary} />
                     <TextInput
                         style={styles.textInput}
-                        placeholder="Insira uma senha"
+                        placeholder="Crie uma senha"
                         placeholderTextColor={colors.secondary}
                         secureTextEntry={secureEntery}
+                        onChangeText={setPassword}
                     />
                     <TouchableOpacity
                         onPress={() => {
@@ -97,11 +114,11 @@ const SignupScreen = () => {
                     </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity onPress={handleHomeTab}
+                <TouchableOpacity onPress={handleFichaI}
                     style={[styles.loginButtonWrapper,
-                    { backgroundColor: colors.bottom2 },
+                    { backgroundColor: colors.roxo2 },
                     { borderWidth: 1 },
-                    { borderColor: colors.bottom1 },
+                    { borderColor: colors.roxo1 },
                     ]}
                 >
                     <Text style={styles.loginText}>Cadastrar</Text>
@@ -119,19 +136,17 @@ const SignupScreen = () => {
 
                     <Text style={styles.accountText}>Já possui uma conta?</Text>
                     <TouchableOpacity
-                        style={[styles.signinL,
-                        ]}
                         onPress={handleLogin}
+                        style={[styles.signUpL,
+                        ]}
                     >
-                        <Text style={styles.signinText}>Acessar</Text>
+                        <Text style={styles.signUpText}>Acessar</Text>
                     </TouchableOpacity>
                 </View>
             </View>
         </View>
     );
 };
-
-export default SignupScreen;
 
 const styles = StyleSheet.create({
     container1: {
@@ -151,7 +166,7 @@ const styles = StyleSheet.create({
     },
     headingText: {
         fontSize: 32,
-        color: colors.bottom1,
+        color: colors.roxo1,
         fontFamily: fonts.SemiBold,
     },
     formContainer: {
@@ -189,11 +204,12 @@ const styles = StyleSheet.create({
         fontFamily: fonts.SemiBold,
         textAlign: "center",
         padding: 10,
+        borderColor: colors.roxo2,
     },
     continueText: {
         textAlign: "center",
         marginVertical: 20,
-        fontSize: 14,
+        fontSize: 16,
         fontFamily: fonts.Regular,
         color: colors.primary,
     },
@@ -228,11 +244,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
         fontSize: 15,
     },
-    signinL: {
+    signUpL: {
         marginTop: 20,
     },
-    signinText: {
+    signUpText: {
         fontSize: 18,
-        color: colors.bottom1,
+        color: colors.laranjaDetalhe,
     },
 });

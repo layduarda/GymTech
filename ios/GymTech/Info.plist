@@ -55,5 +55,10 @@
 		<string>Poppins-Regular.ttf</string>
 		<string>Poppins-SemiBold.ttf</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+		<string>Permissão para acessar sua biblioteca</string>
+	<key>NSCameraUsageDescription</key>
+		<string>Permissão para acessar a sua câmera</string>
+
 </dict>
 </plist>

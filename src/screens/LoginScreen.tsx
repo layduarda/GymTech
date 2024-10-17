@@ -1,47 +1,48 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
+import {TouchableOpacity } from 'react-native-gesture-handler';
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from "../services/firebaseConfig";
+//Firebase authentication
+import { signInWithEmailAndPassword, User } from "firebase/auth";
+import { auth } from "../firebase";
 
 import { colors } from '../utils/colors';
 import { fonts } from '../utils/fonts';
 
-const LoginScreen = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-
-  const handleLogin = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-
-        console.log(user);
-        setUser(user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-
-        console.log(errorMessage);
-      });
-  }
+export const LoginScreen = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
   const [secureEnter, setSecureEnter] = useState(true);
-  const handleHomeTab = () => {
-    navigation.navigate('HomeTab')
-  };
 
   const handleGoBack = () => {
     navigation.goBack();
   };
 
   const handleSignUp = () => {
-    navigation.navigate('SignUp')
+    // navigation.navigate()
+    //@ts-ignore
+    navigation.navigate('signup')
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const credential = await signInWithEmailAndPassword(auth, email, password);
+      console.log("store in storage", credential.user.getIdToken());
+
+
+      //@ts-ignore
+    navigation.navigate('main')
+
+    } catch(error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        console.error(errorCode, errorMessage);
+      }
   };
 
   return (
@@ -50,7 +51,7 @@ const LoginScreen = () => {
         onPress={handleGoBack}
       >
         <Ionicons name={"arrow-back-outline"}
-          color={colors.setaBack}
+          color={colors.laranjaDetalhe}
           size={25}
         />
       </TouchableOpacity>
@@ -69,6 +70,7 @@ const LoginScreen = () => {
             placeholder="Insira seu email"
             placeholderTextColor={colors.secondary}
             keyboardType="email-address"
+            onChangeText={setEmail}
           />
         </View>
 
@@ -79,6 +81,7 @@ const LoginScreen = () => {
             placeholder="Insira sua senha"
             placeholderTextColor={colors.secondary}
             secureTextEntry={secureEnter}
+            onChangeText={setPassword}
           />
           <TouchableOpacity
             onPress={() => {
@@ -97,7 +100,7 @@ const LoginScreen = () => {
         <TouchableOpacity
           style={[styles.loginButtonWrapperL,
           ]}
-          onPress={handleLogin}
+          onPress={handleSubmit}
         >
           <Text style={styles.loginText}>Acessar</Text>
         </TouchableOpacity>
@@ -119,11 +122,10 @@ const LoginScreen = () => {
           <Text style={styles.accountText}>Não possui uma conta?</Text>
 
           <TouchableOpacity
-            style={[styles.signupC,
-            ]}
             onPress={handleSignUp}
+            style={[styles.signInC,]}
           >
-            <Text style={styles.signupText}>Cadastre-se</Text>
+            <Text style={styles.signInText}>Cadastre-se</Text>
           </TouchableOpacity>
         </View>
 
@@ -131,8 +133,6 @@ const LoginScreen = () => {
     </View>
   );
 };
-
-export default LoginScreen;
 
 const styles = StyleSheet.create({
   containerL: {
@@ -152,8 +152,8 @@ const styles = StyleSheet.create({
   },
   headingText: {
     fontSize: 30,
-    color: colors.bottom1,
-    fontFamily: fonts.Medium,
+    color: colors.roxo1,
+    fontFamily: fonts.SemiBold,
   },
   formContainer: {
     marginTop: 20,
@@ -181,8 +181,8 @@ const styles = StyleSheet.create({
   },
   loginButtonWrapperL: {
     borderWidth: 1,
-    borderColor: colors.bottom1,
-    backgroundColor: colors.bottom2,
+    borderColor: colors.roxo1,
+    backgroundColor: colors.roxo2,
     borderRadius: 100,
     marginTop: 20,
   },
@@ -196,14 +196,7 @@ const styles = StyleSheet.create({
   continueText: {
     textAlign: 'center',
     marginVertical: 20,
-    fontSize: 12,
-    fontFamily: fonts.Regular,
-    color: colors.primary,
-  },
-  continueText: {
-    textAlign: "center",
-    marginVertical: 20,
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: fonts.Regular,
     color: colors.primary,
   },
@@ -238,11 +231,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 15,
   },
-  signupC: {
+  signInC: {
     marginTop: 20,
   },
-  signupText: {
+  signInText: {
     fontSize: 18,
-    color: colors.bottom1,
+    color: colors.laranjaDetalhe,
   },
 });
+
