@@ -1,1 +1,3 @@
-# GymTech
+# GymTech - O software que te auxilia a treinar 
+
+O aplicativo será desenvolvido para otimizar o tempo de treino dos usuários, oferecendo orientações sobre a execução correta de exercícios, com contagem automática de repetições e controle do tempo de descanso, utilizando um dispositivo integrado via Bluetooth. Baseado em fundamentos científicos, o aplicativo fornecerá informações sobre a quantidade ideal de repetições e descanso conforme as metas individuais, além de oferecer treinos personalizados. Embora não substitua a orientação de um personal trainer, servirá como um recurso auxiliar para garantir a eficiência, segurança e prevenção de lesões durante os treinos.
