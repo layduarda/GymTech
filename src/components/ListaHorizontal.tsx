@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { colors } from "../utils/colors";
 import { fonts } from "../utils/fonts";
 
 import { useNavigation } from "@react-navigation/native";
-
-
 
 export function ListaHorizontal() {
     const navigation = useNavigation();
@@ -17,15 +15,35 @@ export function ListaHorizontal() {
         navigation.navigate('artigo1')
     };
 
+    const handleArtTwo = () => {
+        //@ts-ignore
+        navigation.navigate('artigo2')
+    };
+
+    const handleArtThree = () => {
+        //@ts-ignore
+        navigation.navigate('artigo3')
+    };
+
+    const handleArtFour = () => {
+        //@ts-ignore
+        navigation.navigate('artigo4')
+    };
+
+    const handleArtFive = () => {
+        //@ts-ignore
+        navigation.navigate('artigo5')
+    };
+
+    const newLocal = '../assets/ImageCard1.webp';
     return (
         <View>
             <Text style={styles.titleArtigos}>
                 Artigos
             </Text>
             <Text style={styles.subTitleArtigos}>
-                Alguns dos nossos artigos para ajudar na sua
-                qualidade de vida e melhorar sua jornada na
-                vida fitness.
+                Confira nossos artigos para melhorar sua qualidade de vida e
+                potencializar sua jornada no mundo fitness.
             </Text>
 
             <ScrollView horizontal={true}
@@ -34,39 +52,76 @@ export function ListaHorizontal() {
                 styles.cardHorizontal]}
                     onPress={handleArtOne}
                 >
-                    <Text style={styles.textCard}>
-                        O que é musculação?
-                    </Text>
+                    <ImageBackground
+                        imageStyle={styles.coverImage}
+                        source={require('../assets/imagens_card/imageCard1.webp')}
+                        resizeMode="cover"
+                        style={styles.cardCover}>
+                        <Text style={styles.textCard}>
+                            O que é musculação?
+                        </Text>
+                    </ImageBackground>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.cardArt,
-                styles.cardHorizontal]}>
-                    <Text style={styles.textCard}>
-                        O que são e como são causadas as lesões?
-                    </Text>
+                styles.cardHorizontal]}
+                    onPress={handleArtTwo}
+                >
+                    <ImageBackground
+                        imageStyle={styles.coverImage}
+                        source={require('../assets/imagens_card/imageCard2.webp')}
+                        resizeMode="cover"
+                        style={styles.cardCover}>
+                        <Text style={styles.textCard}>
+                            Lesões e suas causas
+                        </Text>
+                    </ImageBackground>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.cardArt,
-                styles.cardHorizontal]}>
-                    <Text style={styles.textCard}>
-                        Tecnologia e a eficiência nos treinos
-                    </Text>
+                styles.cardHorizontal]}
+                    onPress={handleArtThree}
+                >
+                    <ImageBackground
+                        imageStyle={styles.coverImage}
+                        source={require('../assets/imagens_card/imageCard3.webp')}
+                        resizeMode="cover"
+                        style={styles.cardCover}>
+                        <Text style={styles.textCard}>
+                            Tecnologia e a eficiência nos treinos
+                        </Text>
+                    </ImageBackground>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.cardArt,
-                styles.cardHorizontal]}>
-                    <Text style={styles.textCard}>
-                        Tempo de descanso
-                        adequado
-                    </Text>
+                styles.cardHorizontal]}
+                    onPress={handleArtFour}
+                >
+                    <ImageBackground
+                        imageStyle={styles.coverImage}
+                        source={require('../assets/imagens_card/imageCard4.webp')}
+                        resizeMode="cover"
+                        style={styles.cardCover}>
+                        <Text style={styles.textCard}>
+                            Tempo de descanso adequado
+                        </Text>
+                    </ImageBackground>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.cardArt,
-                styles.cardHorizontal]}>
-                    <Text style={styles.textCard}>
-                        Monitoramento da frequência
-                        cardíaca
-                    </Text>
+                styles.cardHorizontal]}
+                    onPress={handleArtFive}
+                >
+                    <ImageBackground
+                        imageStyle={styles.coverImage}
+                        source={require('../assets/imagens_card/imageCard5.webp')}
+                        resizeMode="cover"
+                        style={styles.cardCover}>
+                        <Text style={styles.textCard}>
+                            Monitoramento da frequência
+                            cardíaca
+                        </Text>
+                    </ImageBackground>
                 </TouchableOpacity>
 
             </ScrollView>
@@ -75,6 +130,10 @@ export function ListaHorizontal() {
 }
 
 const styles = StyleSheet.create({
+    coverImage: {
+        borderRadius: 10,
+        opacity: 0.7,
+    },
     titleArtigos: {
         fontSize: 24,
         fontFamily: fonts.SemiBold,
@@ -82,31 +141,40 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         color: colors.roxo3,
     },
+    cardCover: {
+        flex: 1,
+        justifyContent: 'center',
+    },
     subTitleArtigos: {
         fontSize: 15,
         fontFamily: fonts.Regular,
         marginLeft: 18,
         color: colors.black,
+        paddingRight: 12,
     },
     containerArtigos: {
         padding: 8,
     },
     cardArt: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
         borderRadius: 10,
         borderWidth: 1,
-        margin: 8,
+        margin: 10,
+        height: 165,
     },
     cardHorizontal: {
         backgroundColor: colors.white,
         width: 120,
-        height: "70%",
     },
     textCard: {
         fontFamily: fonts.Regular,
-        fontSize: 12,
+        fontSize: 10,
         color: colors.black,
+        textAlign: 'left',
+        backgroundColor: colors.white,
+        opacity: 0.8,
+        borderRadius: 10,
+        marginTop: 110,
+        padding: 6,
     }
 })

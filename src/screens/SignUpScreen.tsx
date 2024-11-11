@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
@@ -19,30 +19,10 @@ export const SignUpScreen = () => {
     const [password, setPassword] = useState('');
 
 
-    const handleFichaI = async () => {
-        let user = null;
-
-        try {
-            const res = await createUserWithEmailAndPassword(auth, email, password);
-            user = res.user;
-        } catch (e) {
-            console.error(e);
-            // TODO: Implementar mensagem de erro para o usuário
-        }
-
-        try {
-            await updateProfile(user, {
-                displayName: name,
-            });
-
-            //@ts-ignore
-            navigation.navigate('main')
-        } catch (e) {
-            console.error(e);
-            // TODO: Implementar mensagem de erro para o usuário
-        }
+    const handleFichaI = () => {
+                // @ts-ignore
+                navigation.navigate("fichaI")
     };
-
     const handleGoBack = () => {
         navigation.goBack();
     };
@@ -63,12 +43,14 @@ export const SignUpScreen = () => {
                 />
             </TouchableOpacity>
 
-            <View style={styles.textContainer}>
+            {/* <View style={styles.textContainer}>
                 <Text style={styles.headingText}>Vamos lá!</Text>
                 <Text style={styles.headingText}>Começar</Text>
-            </View>
+            </View> */}
 
-            {/* form  */}
+            <View style={styles.containerLogo}>
+                <Image source={require("../assets/Image.png")} style={styles.bannerImage} />
+            </View>
             <View style={styles.formContainer}>
                 <View style={styles.inputContainer}>
                     <Ionicons
@@ -123,15 +105,7 @@ export const SignUpScreen = () => {
                 >
                     <Text style={styles.loginText}>Cadastrar</Text>
                 </TouchableOpacity>
-                <Text style={styles.continueText}>ou continue com</Text>
-                <TouchableOpacity style={styles.googleButtonContainer}>
-                    <Ionicons
-                        name={"logo-google"}
-                        size={30}
-                        color={colors.secondary}
-                    />
-                    <Text style={styles.googleText}>Google</Text>
-                </TouchableOpacity>
+            
                 <View style={styles.footerContainer}>
 
                     <Text style={styles.accountText}>Já possui uma conta?</Text>
@@ -250,5 +224,15 @@ const styles = StyleSheet.create({
     signUpText: {
         fontSize: 18,
         color: colors.laranjaDetalhe,
+    },
+    containerLogo: {
+        alignItems: 'center',
+        flex: 1,
+      },
+      bannerImage: {
+        width: 400,
+        height: 250,
+        marginVertical: 10,
+        marginTop: 30,
     },
 });

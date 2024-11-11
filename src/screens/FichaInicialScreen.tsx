@@ -1,19 +1,20 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import ToggleSwitch from 'toggle-switch-react-native'
 
 import { UserDetailsService } from "../services/user-service";
 import { colors } from "../utils/colors";
 import { fonts } from "../utils/fonts";
 //mport { ObjectiveType } from "../models/UserDetails";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, Switch } from "react-native-gesture-handler";
 
 import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-list';
-
-//Date picker
-
+import { ref } from "firebase/storage";
+import { storage } from "../firebase";
+import { FileUpload } from "../components/FileUpload";
 
 export const FichaInicialScreen = () => {
     const navigation = useNavigation();
@@ -21,18 +22,6 @@ export const FichaInicialScreen = () => {
 
     //DropDown select-list
     const [selected, setSelected] = React.useState("");
-    const chronic = [
-        { key: '1', value: 'Câncer' },
-        { key: '2', value: 'AVC' },
-        { key: '3', value: 'Pressão alta' },
-        { key: '3', value: 'Bronquite' },
-        { key: '3', value: 'Asma' },
-        { key: '3', value: 'Rinite' },
-        { key: '3', value: 'Sinusite' },
-        { key: '3', value: 'Obesidade' },
-        { key: '3', value: 'Diabetes' },
-        { key: '3', value: 'Colesterol' },
-    ]
 
     const medication = [
         { key: '1', value: 'Sim' },
@@ -88,8 +77,20 @@ export const FichaInicialScreen = () => {
         { key: '3', value: 'Hipertrofia' }
     ]
 
-    //Picker select
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const handleConfirm = (date) => {
+        console.warn("A date has been picked: ", date);
+        hideDatePicker();
+    };
 
     // State for form fields
     const [dateOfBirth, setDateOfBirth] = useState('');
@@ -142,9 +143,32 @@ export const FichaInicialScreen = () => {
         navigation.goBack();
     };
 
+    const handleFinalize = () => {
+        //@ts-ignore
+        navigation.navigate('main')
+    };
+
+    const [switchValue, setSwitchValue] = useState(false);
+    const toggleSwitch = (value) => {
+        setSwitchValue(value);
+    }
+
+    const chronic = [
+        { key: '1', value: 'Câncer' },
+        { key: '2', value: 'AVC' },
+        { key: '3', value: 'Pressão alta' },
+        { key: '3', value: 'Bronquite' },
+        { key: '3', value: 'Asma' },
+        { key: '3', value: 'Rinite' },
+        { key: '3', value: 'Sinusite' },
+        { key: '3', value: 'Obesidade' },
+        { key: '3', value: 'Diabetes' },
+        { key: '3', value: 'Colesterol' },
+    ]
+
     return (
         <ScrollView>
-            <View style={styles.container1}>
+            <View style={styles.container}>
                 <TouchableOpacity style={styles.backButtonWrapper} onPress={handleGoBack}>
                     <Ionicons
                         name={"arrow-back-outline"}
@@ -167,7 +191,12 @@ export const FichaInicialScreen = () => {
 
                 {/* form  */}
                 <View style={styles.formContainer}>
+
                     <View style={styles.inputOne}>
+                        <View>
+                            <FileUpload />
+                        </View>
+
                         <View style={styles.inputContainer}>
                             <TextInput
                                 style={styles.textInput}
@@ -179,64 +208,32 @@ export const FichaInicialScreen = () => {
                         </View>
 
                         <View style={styles.inputContainer}>
-                            <SelectList
-                                setSelected={(val) => setSelected(val)}
-                                data={sexo}
-                                save="value"
-                            />
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="Sexo que você se identifica"
-                                inputMode="text"
-                                placeholderTextColor={colors.secondary}
-                                onChangeText={setObjetive}
+                            <Button title="Show Date Picker" onPress={showDatePicker} />
+                            <DateTimePickerModal
+                                isVisible={isDatePickerVisible}
+                                mode="date"
+                                onConfirm={handleConfirm}
+                                onCancel={hideDatePicker}
                             />
                         </View>
 
-                        <View style={styles.inputContainer}>
+                        <SelectList
+                            setSelected={(val) => setSelected(val)}
+                            data={sexo}
+                            save="value"
+                            placeholder="Sexo que você se identifica"
 
-                            {/* {showPicker && (
-                                <DateTimePicker
-                                    mode="date"
-                                    display="spinner"
-                                    value={date}
-                                    onChange={onChange}
-                                />
-                            )} */}
-
-                            {/* <DateTimePicker
-                               dateFormat="DD/MM/YYYY"
-                               style={styles.dateComponent}
-                               date={}
-                            /> */}
-
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="Insira sua data de nascimento"
-                                placeholderTextColor={colors.secondary}
-                                value={dateOfBirth}
-                                onChangeText={setDateOfBirth}
-                            />
-                        </View>
-
-                        <View style={styles.inputContainer}>
-                            <SelectList
-                                setSelected={(val) => setSelected(val)}
-                                data={objetivo}
-                                save="value"
-                            />
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="Insira seu objetivo"
-                                inputMode="text"
-                                placeholderTextColor={colors.secondary}
-                                onChangeText={setObjetive}
-                            />
-                        </View>
-
+                        />
                     </View>
 
                     <View style={styles.inputTwo}>
+                        <SelectList
+                            setSelected={(val) => setSelected(val)}
+                            data={objetivo}
+                            save="value"
+                            placeholder="Insira seu objetivo"
+                        />
+
                         <View style={styles.inputContainer}>
                             <TextInput
                                 style={styles.textInput}
@@ -259,101 +256,56 @@ export const FichaInicialScreen = () => {
                     </View>
 
                     <View style={styles.inputThree}>
-                        <View style={styles.inputContainer}>
-                            <MultipleSelectList
-                                setSelected={(val) => setSelected(val)}
-                                data={chronic}
-                                save="value"
-                            />
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="Possui alguma doença crônica?"
-                                inputMode="text"
-                                placeholderTextColor={colors.secondary}
-                                onChangeText={setChronicDisease}
-                            />
-                        </View>
+                        <MultipleSelectList
+                            setSelected={(val) => setSelected(val)}
+                            data={chronic}
+                            save="key"
+                            placeholder="Possui alguma doença crônica?"
+                            label="Doença crônica"
 
-                        <View style={styles.inputContainer}>
-                            <SelectList
-                                setSelected={(val) => setSelected(val)}
-                                data={medication}
-                                save="value"
-                            />
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="Faz uso de medicação controlada?"
-                                inputMode="text"
-                                placeholderTextColor={colors.secondary}
-                                onChangeText={setControlledMedication}
-                            />
-                        </View>
+                        />
+            
+                        <SelectList
+                            setSelected={(val) => setSelected(val)}
+                            data={medication}
+                            save="value"
+                            placeholder="Faz uso de medicação controlada?"
+                        />
 
-                        <View style={styles.inputContainer}>
-                            <SelectList
-                                setSelected={(val) => setSelected(val)}
-                                data={cirurgia}
-                                save="value"
-                            />
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="Já passou por alguma cirurgia?"
-                                inputMode="text"
-                                placeholderTextColor={colors.secondary}
-                                onChangeText={setSurgery}
-                            />
-                        </View>
+                        <SelectList
+                            setSelected={(val) => setSelected(val)}
+                            data={cirurgia}
+                            save="value"
+                            placeholder="Já passou por alguma cirurgia?"
+                        />
                     </View>
 
                     <View style={styles.inputFour}>
-                        <View style={styles.inputContainer}>
-                            <MultipleSelectList
-                                setSelected={(val) => setSelected(val)}
-                                data={lesao}
-                                save="value"
-                            />
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="Já sofreu alguma lesão?"
-                                inputMode="text"
-                                placeholderTextColor={colors.secondary}
-                                onChangeText={setInjury}
-                            />
-                        </View>
 
-                        <View style={styles.inputContainer}>
-                            <SelectList
-                                setSelected={(val) => setSelected(val)}
-                                data={sports}
-                                save="value"
-                            />
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="Já praticou ou pratica algum tipo de esporte?"
-                                inputMode="text"
-                                placeholderTextColor={colors.secondary}
-                                onChangeText={setPlaySports}
-                            />
-                        </View>
+                        <MultipleSelectList
+                            setSelected={(val) => setSelected(val)}
+                            data={lesao}
+                            save="value"
+                            placeholder="Já sofreu alguma lesão?"
+                        />
 
-                        <View style={styles.inputContainer}>
-                            <SelectList
-                                setSelected={(val) => setSelected(val)}
-                                data={musculação}
-                                save="value"
-                            />
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="Já praticou musculação?"
-                                inputMode="text"
-                                placeholderTextColor={colors.secondary}
-                                onChangeText={setBodyBuilding}
-                            />
-                        </View>
+                        <SelectList
+                            setSelected={(val) => setSelected(val)}
+                            data={sports}
+                            save="value"
+                            placeholder="Já praticou ou pratica algum tipo de esporte?"
+                        />
+
+                        <SelectList
+                            setSelected={(val) => setSelected(val)}
+                            data={musculação}
+                            save="value"
+                            placeholder="Já praticou musculação?"
+                        />
                     </View>
                 </View>
 
-                <TouchableOpacity onPress={handleSubmit}
+                <TouchableOpacity onPress={handleFinalize}
                     style={[styles.finalizeButtonWrapper,
                     { backgroundColor: colors.laranja1 },
                     { borderWidth: 1 },
@@ -368,7 +320,7 @@ export const FichaInicialScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    container1: {
+    container: {
         flex: 1,
         backgroundColor: colors.white,
         padding: 20,
@@ -422,6 +374,9 @@ const styles = StyleSheet.create({
     inputFour: {
         marginBottom: 30,
     },
+    inputFive: {
+        marginBottom: 30,
+    },
     inputContainer: {
         borderWidth: 1,
         borderColor: colors.roxo1,
@@ -448,7 +403,8 @@ const styles = StyleSheet.create({
     finalizeButtonWrapper: {
         borderRadius: 40,
         marginTop: 20,
-        borderColor: colors.laranjaDetalhe,
+        borderWidth: 2,
+        borderColor: colors.laranja8,
     },
     finalizeText: {
         color: colors.white,
@@ -456,5 +412,22 @@ const styles = StyleSheet.create({
         fontFamily: fonts.Regular,
         textAlign: "center",
         padding: 12,
+    },
+    label: {
+        fontFamily: fonts.Medium,
+        fontSize: 15,
+        color: colors.roxo3,
+        textAlign: 'left',
+    },
+    boxContainer: {
+        borderWidth: 1,
+        borderColor: colors.roxo1,
+        borderRadius: 15,
+        height: 80,
+        paddingHorizontal: 20,
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 2,
+        marginVertical: 9,
     },
 });

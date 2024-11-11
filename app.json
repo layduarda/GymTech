@@ -4,12 +4,16 @@
     "slug": "GymTech",
     "version": "1.0.0",
     "android": {
-      "package": "dev.ecavalcanti.GymTech"
+      "package": "dev.ecavalcanti.GymTech",
+      "userInterfaceStyle": "automatic"
     },
     "plugins": [
       [
+        // "expo-image-picker",
+        // {
+        //   "photosPermission": "The app accesses your photos to let you share them with your friends."
+        // },
         "expo-font",
-        
         {
           "fonts": [
             "./src/assets/fonts/Poppins-ExtraBold.ttf",

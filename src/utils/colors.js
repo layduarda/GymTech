@@ -8,6 +8,7 @@ export const colors = {
     fundo: '#dfdfdf', //Fundo do aplicativo
     fundo2: '#c0c0c0', //Segunda opção de fundo
     fundo3: '#d7d7d7', //Terceira opção de fundo
+    fundo4: '#dfdfdf', //Quarta opção de fundo
 
     //Paleta de roxos
     roxo1: '#7e097e', //Roxo escuro bottom1
@@ -16,6 +17,15 @@ export const colors = {
     roxo4: '#ab6ca7', //Roxo para detalhes purple
     roxo5: '#71286f', //Roxo para ficha de treino fichas
     roxo6: '#dab9d9', //
+    roxo7: '#cb6ac7', //
+    roxo8: '#bc5ebc', //
+    roxo9: '#b85db5', //
+    roxo10: '#6d2d6b', //
+    roxo11: '#ffe3ff', //
+    roxo12: '#d89ed3', //
+    roxo13: '#b290b1', //
+    roxo14: '#d9bdd8', //
+    roxo15: '#cc7dc7', //
     roxoText: '#4f0d4c', //Roxo escuro para textos text
     roxoFichaE: '#641462', //Roxo para botão ficha especializada fichaE
 
@@ -26,7 +36,7 @@ export const colors = {
     laranja4: '#fcea82', //Laranja quase laranja
     laranja5: '#f7a83a', //Laranja vivo
     laranja6: '#fda61a', //Laranja mostarda
-    laraja7: '#fba726', //Laranja mostarda 2
+    laraja7: '#de82dd', //Laranja mostarda 2
     laranja8: '#d6850c', //Laranja escuro
     laranjaDetalhe: '#EF820D', //Icons cards pequenos Home Tab
 

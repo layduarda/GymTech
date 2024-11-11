@@ -1,124 +1,247 @@
-import { Image, StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
-import React from "react";
-import { fonts } from '../utils/fonts';
-import { colors } from '../utils/colors';
+import React, { useState } from 'react';
 
+import { ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { colors } from '../utils/colors';
+import { fonts } from '../utils/fonts';
+
+import { useNavigation } from "@react-navigation/native";
+import { ListaHorizontal } from '../components/ListaHorizontal';
+
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { AppBar } from '../components/app.bar';
 
-export function Profile() {
+export function ProfileTab() {
+    const navigation = useNavigation();
+    const [secureEntery, setSecureEntery] = useState(true);
+
+
+    const handleTreino = () => {
+        //@ts-ignore
+        navigation.navigate('fichaD')
+    };
+
+    const handleFeed = () => {
+        //@ts-ignore
+        navigation.navigate('feed')
+    };
+
+    const handleAgenda = () => {
+        //@ts-ignore
+        navigation.navigate('agenda')
+    };
+
     return (
         <ScrollView style={styles.container}>
             <AppBar title="" />
-            <View style={styles.containerTwo}>
-                <Text style={styles.textProfile}>
-                    Em desenvolvimento
+            <View style={styles.containerProfile}>
+                <Text style={styles.titleProfile}>
+                    Perfil
                 </Text>
-               {/* <View style={styles.inputCamp1}>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder="Nome completo"
-                        inputMode="email"
-                        placeholderTextColor={colors.white}
-                        //keyboardType=""
-                    />
+                <TouchableOpacity style={styles.iconEdit}>
+                    <Ionicons name={"create-outline"} size={24}
+                        color={colors.laranjaDetalhe} />
+                </TouchableOpacity>
+
+                <View style={styles.fotoProfile}>
+                    <ImageBackground
+                        imageStyle={styles.coverImage}
+                        source={require('../utils/images/image_user.jpeg')}
+                        resizeMode="cover">
+                    </ImageBackground>
                 </View>
 
-                <View style={styles.inputCamp2}>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder="Idade"
-                        inputMode="email"
-                        placeholderTextColor={colors.white}
-                        //keyboardType="email-address"
-                    />
+                <View style={styles.textProfile}>
+                    <Text style={styles.title}>
+                        Nome completo:
+                    </Text>
+                    <Text style={styles.textP}>
+                        Layslla Eduarda Oreti dos Santos
+                    </Text>
+                    <View style={styles.linhaText}></View>
                 </View>
 
-                <View style={styles.inputCamp3}>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder="Objetivo"
-                        inputMode="email"
-                        placeholderTextColor={colors.white}
-                        //keyboardType="email-address"
-                    />
+                <View style={styles.textProfile}>
+                    <Text style={styles.title}>
+                        Data de nascimento:
+                    </Text>
+                    <Text style={styles.textP}>
+                        10/07/2006
+                    </Text>
+                    <View style={styles.linhaText}></View>
                 </View>
 
-                <View style={styles.inputCamp4}>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder=""
-                        inputMode="email"
-                        placeholderTextColor={colors.white}
-                        //keyboardType="email-address"
-                    />
-                </View> */}
+                <View style={styles.textProfile}>
+                    <Text style={styles.title}>
+                        Sexo:
+                    </Text>
+                    <Text style={styles.textP}>
+                        Feminino
+                    </Text>
+                    <View style={styles.linhaText}></View>
+                </View>
+
+                <View style={styles.textProfile}>
+                    <Text style={styles.title}>
+                        Objetivo:
+                    </Text>
+                    <Text style={styles.textP}>
+                        Hipertrofia
+                    </Text>
+                    <View style={styles.linhaText}></View>
+                </View>
+
+                <View style={styles.textProfile}>
+                    <Text style={styles.title}>
+                        Peso (Kg):
+                    </Text>
+                    <Text style={styles.textP}>
+                        53
+                    </Text>
+                    <View style={styles.linhaText}></View>
+                </View>
+
+                <View style={styles.textProfile}>
+                    <Text style={styles.title}>
+                        Altura (Cm):
+                    </Text>
+                    <Text style={styles.textP}>
+                        163
+                    </Text>
+                    <View style={styles.linhaText}></View>
+                </View>
+
+                <View style={styles.textProfile}>
+                    <Text style={styles.title}>
+                        Possui alguma doença crônica?:
+                    </Text>
+                    <Text style={styles.textP}>
+                        Não
+                    </Text>
+                    <View style={styles.linhaText}></View>
+                </View>
+
+                <View style={styles.textProfile}>
+                    <Text style={styles.title}>
+                        Faz uso de medicação controlada?:
+                    </Text>
+                    <Text style={styles.textP}>
+                        Não
+                    </Text>
+                    <View style={styles.linhaText}></View>
+                </View>
+
+                <View style={styles.textProfile}>
+                    <Text style={styles.title}>
+                        Já passou por alguma cirurgia?:
+                    </Text>
+                    <Text style={styles.textP}>
+                        Não
+                    </Text>
+                    <View style={styles.linhaText}></View>
+                </View>
+
+                <View style={styles.textProfile}>
+                    <Text style={styles.title}>
+                        Já sofreu alguma lesão?:
+                    </Text>
+                    <Text style={styles.textP}>
+                        Não
+                    </Text>
+                    <View style={styles.linhaText}></View>
+                </View>
+
+                <View style={styles.textProfile}>
+                    <Text style={styles.title}>
+                        Já praticou/pratica algum esporte?:
+                    </Text>
+                    <Text style={styles.textP}>
+                        Não
+                    </Text>
+                    <View style={styles.linhaText}></View>
+                </View>
+
+                <View style={styles.textProfile}>
+                    <Text style={styles.title}>
+                        Já praticou musculação:
+                    </Text>
+                    <Text style={styles.textP}>
+                        Sim
+                    </Text>
+                </View>
             </View>
         </ScrollView>
     );
 }
 
-export default Profile;
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.fundo,
+        backgroundColor: colors.white,
     },
-    containerTwo: {
-        marginTop: 20,
+    containerProfile: {
+        width: "90%",
+        height: "100%",
+        backgroundColor: colors.fundo,
+        marginLeft: 22,
+        marginRight: 10,
+        marginTop: 10,
+        borderRadius: 30,
+        borderWidth: 1.2,
+        borderColor: colors.roxo3,
+    },
+    titleProfile: {
+        paddingTop: 20,
+        textAlign: 'center',
+        fontSize: 25,
+        fontFamily: fonts.SemiBold,
+        color: colors.laranjaDetalhe,
+        marginBottom: 10,
+    },
+    fotoProfile: {
+        height: 90,
+        marginTop: 5,
+        marginBottom: 50,
         alignItems: 'center',
-        width: "100%",
-        backgroundColor: colors.roxo3,
+        marginRight: 120,
+    },
+    coverImage: {
+        borderWidth: 2.4,
+        borderColor: colors.roxo3,
+        borderRadius: 100,
+        height: 110,
+        width: 110,
+        alignItems: 'center',
     },
     textProfile: {
-        justifyContent: 'center',
-        color: colors.white,
-        fontFamily: fonts.SemiBold,
-        fontSize: 20,
     },
-    inputCamp1: {
-        borderWidth: 1,
-        borderColor: colors.white,
-        borderRadius: 30,
-        paddingHorizontal: 20,
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 4,
-        marginVertical: 14,
+    title: {
+        fontFamily: fonts.Medium,
+        color: colors.roxo1,
+        fontSize: 15,
+        textAlign: 'left',
+        marginLeft: 30,
+        marginBottom: 6,
     },
-    inputCamp2: {
-        borderWidth: 1,
-        borderColor: colors.white,
-        borderRadius: 30,
-        paddingHorizontal: 20,
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 4,
-        marginVertical: 14,
-    },
-    inputCamp3: {
-        borderWidth: 1,
-        borderColor: colors.white,
-        borderRadius: 30,
-        paddingHorizontal: 20,
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 4,
-        marginVertical: 14,
-    },
-    inputCamp4: {
-        borderWidth: 1,
-        borderColor: colors.white,
-        borderRadius: 30,
-        paddingHorizontal: 20,
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 4,
-        marginVertical: 14,
-    },
-    textInput: {
-        flex: 1,
-        paddingHorizontal: 10,
+    textP: {
         fontFamily: fonts.Light,
+        color: colors.black,
+        fontSize: 14,
+        textAlign: 'left',
+        marginLeft: 30,
+        marginBottom: 4,
     },
-})
+    linhaText: {
+        height: 0.90,
+        backgroundColor: colors.roxo3,
+        margin: 8,
+        lineHeight: 27,
+        marginLeft: 30,
+        marginRight: 30,
+    },
+    iconEdit: {
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+}
+)

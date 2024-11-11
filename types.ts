@@ -1,3 +1,12 @@
+
+interface SelectListProps {
+    styles?: { borderColor: string };
+    setSelected: (val: any) => void;
+    data: { key: string; value: string }[];
+    save: string;
+    placeholder: string;
+    // outras propriedades, se houver
+}
 // import { StackNavigationProp } from "@react-navigation/stack";
 
 // export type RootStackParamList = {

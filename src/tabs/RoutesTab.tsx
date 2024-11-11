@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {Feather} from '@expo/vector-icons';
 
-import ProfileTab from "./ProfileTab";
+import { ProfileTab } from "./ProfileTab";
 import { HomeTab } from "./HomeTab";
-import TreinoTab from "./TreinoTab";
+import { TreinoTab } from "./TreinoTab";
 
 import { colors } from "../utils/colors";
 

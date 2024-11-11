@@ -16,14 +16,9 @@ export function HomeTab() {
     const [secureEntery, setSecureEntery] = useState(true);
 
 
-    const handleFichaI = () => {
-        //@ts-ignore
-        navigation.navigate('fichaI')
-    };
-
     const handleTreino = () => {
         //@ts-ignore
-        navigation.navigate('ficha')
+        navigation.navigate('fichaD')
     };
 
     const handleFeed = () => {
@@ -34,6 +29,11 @@ export function HomeTab() {
     const handleAgenda = () => {
         //@ts-ignore
         navigation.navigate('agenda')
+    };
+
+    const handleFichaI = () => {
+        //@ts-ignore
+        navigation.navigate('fichaI')
     };
 
     return (
@@ -48,11 +48,16 @@ export function HomeTab() {
                     {/*botão ir para a ficha do treino do dia*/}
                 </TouchableOpacity>
             </View>
+            <TouchableOpacity
+                onPress={handleFichaI}
+            >
+                <Text>Anamnese</Text>
+            </TouchableOpacity>
 
             <View style={styles.containerCard}
             >
                 <TouchableOpacity style={[styles.card1]}
-                    onPress={handleFichaI}
+                    onPress={handleFeed}
                 >
                     <Ionicons name={"image-outline"} size={25}
                         color={colors.laranjaDetalhe} />
@@ -81,7 +86,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     card: {
-        marginTop: 50,
+        marginTop: 35,
         borderWidth: 1.2,
         borderColor: colors.roxo5,
         width: "90%",

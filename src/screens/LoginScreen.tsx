@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image } from 'react-native';
 import {TouchableOpacity } from 'react-native-gesture-handler';
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -56,10 +56,14 @@ export const LoginScreen = () => {
         />
       </TouchableOpacity>
 
-      <View style={styles.textContainer}>
+      {/* <View style={styles.textContainer}>
         <Text style={styles.headingText}>Olá,</Text>
         <Text style={styles.headingText}>bem-vindo</Text>
         <Text style={styles.headingText}>de volta!</Text>
+      </View> */}
+
+      <View style={styles.containerLogo}>
+      <Image source={require("../assets/Image.png")} style={styles.bannerImage} />
       </View>
 
       <View style={styles.formContainer}>
@@ -104,19 +108,19 @@ export const LoginScreen = () => {
         >
           <Text style={styles.loginText}>Acessar</Text>
         </TouchableOpacity>
-
+{/* 
         <Text style={styles.continueText}>
           ou continue com
-        </Text>
+        </Text> */}
 
-        <TouchableOpacity style={styles.googleButtonContainer}>
+        {/* <TouchableOpacity style={styles.googleButtonContainer}>
           <Ionicons
             name={"logo-google"}
             size={30}
             color={colors.secondary}
           />
           <Text style={styles.googleText}>Google</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <View style={styles.footerContainer}>
           <Text style={styles.accountText}>Não possui uma conta?</Text>
@@ -238,5 +242,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: colors.laranjaDetalhe,
   },
+  containerLogo: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  bannerImage: {
+    width: 400,
+    height: 250,
+    marginVertical: 10,
+    marginTop: 30,
+},
 });
 
