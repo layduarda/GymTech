@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Image } from 'react-native';
-import {TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View, TextInput, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 //Firebase authentication
@@ -35,14 +35,14 @@ export const LoginScreen = () => {
 
 
       //@ts-ignore
-    navigation.navigate('main')
+      navigation.navigate('main')
 
-    } catch(error) {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
 
-        console.error(errorCode, errorMessage);
-      }
+      console.error(errorCode, errorMessage);
+    }
   };
 
   return (
@@ -56,27 +56,23 @@ export const LoginScreen = () => {
         />
       </TouchableOpacity>
 
-      {/* <View style={styles.textContainer}>
-        <Text style={styles.headingText}>Olá,</Text>
-        <Text style={styles.headingText}>bem-vindo</Text>
-        <Text style={styles.headingText}>de volta!</Text>
-      </View> */}
-
       <View style={styles.containerLogo}>
-      <Image source={require("../assets/Image.png")} style={styles.bannerImage} />
+        <Image source={require("../assets/Image.png")} style={styles.bannerImage} />
       </View>
 
       <View style={styles.formContainer}>
-        <View style={styles.inputLogin}>
-          <Ionicons name={"mail-outline"} size={25}
-            color={colors.secondary} />
-          <TextInput style={styles.textInput}
-            placeholder="Insira seu email"
-            placeholderTextColor={colors.secondary}
-            keyboardType="email-address"
-            onChangeText={setEmail}
-          />
-        </View>
+        <KeyboardAvoidingView>
+          <View style={styles.inputLogin}>
+            <Ionicons name={"mail-outline"} size={25}
+              color={colors.secondary} />
+            <TextInput style={styles.textInput}
+              placeholder="Insira seu email"
+              placeholderTextColor={colors.secondary}
+              keyboardType="email-address"
+              onChangeText={setEmail}
+            />
+          </View>
+        </KeyboardAvoidingView>
 
         <View style={styles.inputLogin}>
           <Ionicons name={"lock-closed-outline"} size={25}
@@ -108,19 +104,6 @@ export const LoginScreen = () => {
         >
           <Text style={styles.loginText}>Acessar</Text>
         </TouchableOpacity>
-{/* 
-        <Text style={styles.continueText}>
-          ou continue com
-        </Text> */}
-
-        {/* <TouchableOpacity style={styles.googleButtonContainer}>
-          <Ionicons
-            name={"logo-google"}
-            size={30}
-            color={colors.secondary}
-          />
-          <Text style={styles.googleText}>Google</Text>
-        </TouchableOpacity> */}
 
         <View style={styles.footerContainer}>
           <Text style={styles.accountText}>Não possui uma conta?</Text>
@@ -251,6 +234,6 @@ const styles = StyleSheet.create({
     height: 250,
     marginVertical: 10,
     marginTop: 30,
-},
+  },
 });
 

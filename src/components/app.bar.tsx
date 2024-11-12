@@ -19,13 +19,6 @@ export const AppBar = ({ title }) => {
     <>
       <View style={styles.header}>
         <Text style={styles.title}>GymTech</Text>
-        {/* <TouchableOpacity>
-            <Ionicons
-            name={"person-outline"}
-            size={30}
-            color={colors.white}
-          />
-        </TouchableOpacity> */}
       </View>
 
       <View>

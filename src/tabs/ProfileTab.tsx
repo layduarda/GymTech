@@ -5,11 +5,14 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { colors } from '../utils/colors';
 import { fonts } from '../utils/fonts';
 
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from '@react-navigation/native';
 import { ListaHorizontal } from '../components/ListaHorizontal';
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { AppBar } from '../components/app.bar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import auth from '@react-native-firebase/auth';
 
 export function ProfileTab() {
     const navigation = useNavigation();
@@ -31,8 +34,27 @@ export function ProfileTab() {
         navigation.navigate('agenda')
     };
 
+    // const router = router();
+
+    function handleLogOut() {
+        const handleSignOut = () => {
+            auth()
+                .signOut()
+                .then(() => {
+                    alert('Você desconectou-se do sistema!');
+                    // router.replace('/');
+                })
+                .catch((error) => {
+                    const errorMessage = error.errorMessage;
+                    alert(errorMessage);
+                })
+
+        }
+    }
+    const insets = useSafeAreaInsets();
+
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 60 }}>
             <AppBar title="" />
             <View style={styles.containerProfile}>
                 <Text style={styles.titleProfile}>
@@ -169,6 +191,16 @@ export function ProfileTab() {
                         Sim
                     </Text>
                 </View>
+
+                <View style={styles.campLogOut}>
+                    <TouchableOpacity style={styles.buttonLogOut}
+                        onPress={handleLogOut}
+                    >
+                        <Text style={styles.textLogOut}>
+                            Log Out
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </ScrollView>
     );
@@ -178,10 +210,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.white,
+        paddingBottom: 200,
     },
     containerProfile: {
         width: "90%",
-        height: "100%",
+        height: "90%",
         backgroundColor: colors.fundo,
         marginLeft: 22,
         marginRight: 10,
@@ -189,6 +222,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         borderWidth: 1.2,
         borderColor: colors.roxo3,
+        paddingBottom: 90,
     },
     titleProfile: {
         paddingTop: 20,
@@ -243,5 +277,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 10,
     },
-}
-)
+    campLogOut: {
+        marginTop: 30,
+        alignItems: 'center',
+    },
+    buttonLogOut: {
+        backgroundColor: colors.laranja1,
+        width: "90%",
+        height: 55,
+        borderWidth: 2,
+        justifyContent: 'center',
+        borderColor: colors.laranjaDetalhe,
+        borderRadius: 30,
+        marginTop: 18,
+    },
+    textLogOut: {
+        fontSize: 20,
+        color: colors.white,
+        textAlign: 'center',
+        padding: 12,
+        fontFamily: fonts.SemiBold,
+    },
+});
