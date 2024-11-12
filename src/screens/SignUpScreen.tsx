@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from "react-native";
+import { Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, UserCredential } from "firebase/auth";
 import { auth } from "../firebase";
 import { colors } from "../utils/colors";
 import { fonts } from "../utils/fonts";
@@ -17,18 +17,40 @@ export const SignUpScreen = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
 
-    const handleFichaI = () => {
-                // @ts-ignore
-                navigation.navigate("fichaI")
-    };
+    const handleSubmit = async () => {
+        setIsLoading(true);
+
+        let credential: UserCredential = null;
+
+        try {
+            credential = await createUserWithEmailAndPassword(auth, email, password)
+        } catch (e) {
+            Alert.alert("Erro", "Falha ao realizar cadastro. Tente novamente mais tarde.");
+            setIsLoading(false);
+
+            return
+        }
+
+        try {
+            await updateProfile(credential.user, {
+                displayName: name
+            });
+        } catch (e) {
+            console.error("Failed to save displayName");
+        }
+
+        // @ts-ignore
+        navigation.navigate("fichaI");
+    }
+
     const handleGoBack = () => {
         navigation.goBack();
     };
 
     const handleLogin = () => {
-        // navigation.navigate()
         // @ts-ignore
         navigation.navigate("login")
     };
@@ -96,7 +118,8 @@ export const SignUpScreen = () => {
                     </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity onPress={handleFichaI}
+                <TouchableOpacity onPress={handleSubmit}
+                    disabled={isLoading}
                     style={[styles.loginButtonWrapper,
                     { backgroundColor: colors.roxo2 },
                     { borderWidth: 1 },
@@ -105,7 +128,7 @@ export const SignUpScreen = () => {
                 >
                     <Text style={styles.loginText}>Cadastrar</Text>
                 </TouchableOpacity>
-            
+
                 <View style={styles.footerContainer}>
 
                     <Text style={styles.accountText}>Já possui uma conta?</Text>
@@ -228,8 +251,8 @@ const styles = StyleSheet.create({
     containerLogo: {
         alignItems: 'center',
         flex: 1,
-      },
-      bannerImage: {
+    },
+    bannerImage: {
         width: 400,
         height: 250,
         marginVertical: 10,
