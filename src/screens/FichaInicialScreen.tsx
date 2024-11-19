@@ -1,27 +1,22 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Alert, Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import ToggleSwitch from 'toggle-switch-react-native'
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { UserDetailsService } from "../services/user-service";
 import { colors } from "../utils/colors";
 import { fonts } from "../utils/fonts";
 //mport { ObjectiveType } from "../models/UserDetails";
-import { ScrollView, Switch } from "react-native-gesture-handler";
+import { ScrollView } from "react-native-gesture-handler";
 
+import * as ImagePicker from 'expo-image-picker';
 import { MultipleSelectList, SelectList } from 'react-native-dropdown-select-list';
-import { ref } from "firebase/storage";
-import { storage } from "../firebase";
-import { FileUpload } from "../components/FileUpload";
+import { auth } from "../firebase";
 
 export const FichaInicialScreen = () => {
     const navigation = useNavigation();
     const [secureEntery, setSecureEntery] = useState(true);
-
-    //DropDown select-list
-    const [selected, setSelected] = React.useState("");
 
     const medication = [
         { key: '1', value: 'Sim' },
@@ -88,16 +83,18 @@ export const FichaInicialScreen = () => {
     };
 
     const handleConfirm = (date) => {
-        console.warn("A date has been picked: ", date);
+        const dateTimeString = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+        setDateOfBirth(dateTimeString);
         hideDatePicker();
     };
 
     // State for form fields
+    const [profileImage, setProfileImage] = useState(null);
     const [dateOfBirth, setDateOfBirth] = useState('');
+    const [opcaoSexual, setOpcaoSexual] = useState('');
     const [objective, setObjetive] = useState('');
     const [peso, setPeso] = useState('');
     const [altura, setAltura] = useState('');
-    const [daysOfTheWeek, setDaysOfTheWeek] = useState('');
     const [chronicDisease, setChronicDisease] = useState('');
     const [surgery, setSurgery] = useState('');
     const [injury, setInjury] = useState('');
@@ -124,12 +121,11 @@ export const FichaInicialScreen = () => {
 
     const handleSubmit = async () => {
         const service = new UserDetailsService();
-        await service.create({
+        const result = await service.upsert({
+            userId: auth.currentUser.uid,
             dateOfBirth: dateOfBirth,
-            //objective: ObjectiveType.DEFINICAO,
             peso: peso,
             altura: altura,
-            daysOfTheWeek: daysOfTheWeek,
             chronicDisease: chronicDisease,
             surgery: surgery,
             injury: injury,
@@ -137,20 +133,37 @@ export const FichaInicialScreen = () => {
             bodyBuilding: bodyBuilding,
             controlledMedication: controlledMedication,
         })
+
+        if (!result) {
+            Alert.alert("Error", "Failed to sava user data");
+        } else {
+            //@ts-ignore
+            navigation.navigate('perfil')
+        }
     };
 
     const handleGoBack = () => {
         navigation.goBack();
     };
 
-    const handleFinalize = () => {
-        //@ts-ignore
-        navigation.navigate('main')
-    };
-
     const [switchValue, setSwitchValue] = useState(false);
     const toggleSwitch = (value) => {
         setSwitchValue(value);
+    }
+
+
+    const clickHandler = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ['images'],
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            const imageUri = result.assets[0].uri
+            setProfileImage(imageUri)
+        }
     }
 
     const chronic = [
@@ -193,22 +206,23 @@ export const FichaInicialScreen = () => {
                 <View style={styles.formContainer}>
 
                     <View style={styles.inputOne}>
-                        <View>
-                            <FileUpload />
+                        <View style={styles.containerBottom}>
+                            <TouchableOpacity
+                                style={styles.bottomGalery}
+                                onPress={clickHandler}
+                            >
+                                {profileImage && <Image source={{ uri: profileImage }} style={{ width: 200, height: 200, resizeMode: 'contain' }} />}
+                                {!profileImage && <Ionicons name="images-outline" size={30} color={colors.fundo5} />}
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.form1}>
+                            <Text style={styles.labelFoto}>
+                                Adicione uma foto ao seu perfil
+                            </Text>
                         </View>
 
                         <View style={styles.inputContainer}>
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="Inserir foto de perfil"
-                                inputMode="text"
-                                placeholderTextColor={colors.secondary}
-                                onChangeText={setBodyBuilding}
-                            />
-                        </View>
-
-                        <View style={styles.inputContainer}>
-                            <Button title="Show Date Picker" onPress={showDatePicker} />
+                            <Button title="Insira sua data de nascimento" onPress={showDatePicker} />
                             <DateTimePickerModal
                                 isVisible={isDatePickerVisible}
                                 mode="date"
@@ -218,17 +232,18 @@ export const FichaInicialScreen = () => {
                         </View>
 
                         <SelectList
-                            setSelected={(val) => setSelected(val)}
+                            boxStyles={styles.containerForm}
+                            setSelected={setOpcaoSexual}
                             data={sexo}
                             save="value"
                             placeholder="Sexo que você se identifica"
-
                         />
                     </View>
 
                     <View style={styles.inputTwo}>
                         <SelectList
-                            setSelected={(val) => setSelected(val)}
+                            boxStyles={styles.containerForm}
+                            setSelected={setObjetive}
                             data={objetivo}
                             save="value"
                             placeholder="Insira seu objetivo"
@@ -257,23 +272,24 @@ export const FichaInicialScreen = () => {
 
                     <View style={styles.inputThree}>
                         <MultipleSelectList
-                            setSelected={(val) => setSelected(val)}
+                            boxStyles={styles.containerForm2}
+                            setSelected={setChronicDisease}
                             data={chronic}
                             save="key"
                             placeholder="Possui alguma doença crônica?"
-                            label="Doença crônica"
-
                         />
-            
+
                         <SelectList
-                            setSelected={(val) => setSelected(val)}
+                            boxStyles={styles.containerForm}
+                            setSelected={setControlledMedication}
                             data={medication}
                             save="value"
                             placeholder="Faz uso de medicação controlada?"
                         />
 
                         <SelectList
-                            setSelected={(val) => setSelected(val)}
+                            boxStyles={styles.containerForm2}
+                            setSelected={setSurgery}
                             data={cirurgia}
                             save="value"
                             placeholder="Já passou por alguma cirurgia?"
@@ -283,21 +299,24 @@ export const FichaInicialScreen = () => {
                     <View style={styles.inputFour}>
 
                         <MultipleSelectList
-                            setSelected={(val) => setSelected(val)}
+                            boxStyles={styles.containerForm2}
+                            setSelected={setInjury}
                             data={lesao}
                             save="value"
                             placeholder="Já sofreu alguma lesão?"
                         />
 
                         <SelectList
-                            setSelected={(val) => setSelected(val)}
+                            boxStyles={styles.containerForm}
+                            setSelected={setPlaySports}
                             data={sports}
                             save="value"
                             placeholder="Já praticou ou pratica algum tipo de esporte?"
                         />
 
                         <SelectList
-                            setSelected={(val) => setSelected(val)}
+                            boxStyles={styles.containerForm}
+                            setSelected={setBodyBuilding}
                             data={musculação}
                             save="value"
                             placeholder="Já praticou musculação?"
@@ -305,11 +324,11 @@ export const FichaInicialScreen = () => {
                     </View>
                 </View>
 
-                <TouchableOpacity onPress={handleFinalize}
+                <TouchableOpacity onPress={handleSubmit}
                     style={[styles.finalizeButtonWrapper,
                     { backgroundColor: colors.laranja1 },
-                    { borderWidth: 1 },
-                    { borderColor: colors.laranja8 },
+                    { borderWidth: 2 },
+                    { borderColor: colors.laranjaDetalhe },
                     ]}
                 >
                     <Text style={styles.finalizeText}>Finalizar</Text>
@@ -324,6 +343,17 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.white,
         padding: 20,
+    },
+    labelFoto: {
+        fontSize: 16,
+        fontFamily: fonts.Light,
+        color: colors.roxo3,
+        textAlign: 'right',
+    },
+    form1: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 5,
     },
     dateComponent: {
         width: 300,
@@ -349,17 +379,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     headingSubtitle: {
-        fontSize: 15,
+        fontSize: 16,
         color: colors.roxo3,
         fontFamily: fonts.Regular,
+        textAlign: 'center',
     },
     formContainer: {
+        borderWidth: 2,
         marginTop: 20,
-        backgroundColor: colors.roxo6,
+        backgroundColor: colors.fundo4,
         width: "100%",
         padding: 20,
         borderRadius: 20,
-        borderWidth: 1.2,
         borderColor: colors.roxo1,
     },
     inputOne: {
@@ -379,7 +410,7 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         borderWidth: 1,
-        borderColor: colors.roxo1,
+        borderColor: colors.roxo3,
         borderRadius: 15,
         height: 40,
         paddingHorizontal: 20,
@@ -403,8 +434,6 @@ const styles = StyleSheet.create({
     finalizeButtonWrapper: {
         borderRadius: 40,
         marginTop: 20,
-        borderWidth: 2,
-        borderColor: colors.laranja8,
     },
     finalizeText: {
         color: colors.white,
@@ -429,5 +458,55 @@ const styles = StyleSheet.create({
         alignItems: "center",
         padding: 2,
         marginVertical: 9,
+    },
+    bottomGalery: {
+        borderWidth: 2,
+        borderColor: colors.roxo3,
+        position: "absolute",
+        width: 105,
+        height: 105,
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        right: 20,
+        bottom: 16,
+        backgroundColor: colors.fundo,
+        elevation: 5,
+
+    },
+    containerBottom: {
+        marginTop: "40%",
+        width: "9%",
+        marginLeft: "62%",
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    containerFotoBtn: {
+        flex: 1,
+        height: 200,
+        width: "100%",
+        flexDirection: 'row',
+        marginBottom: 50,
+        marginTop: 20,
+        backgroundColor: colors.fundo
+    },
+    containerForm: {
+        borderWidth: 1,
+        borderColor: colors.roxo3,
+        borderRadius: 20,
+        height: 50,
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 2,
+        marginVertical: 9,
+    },
+    containerForm2: {
+        borderWidth: 1,
+        borderColor: colors.roxo3,
+        borderRadius: 20,
+        height: 68,
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 2,
     },
 });

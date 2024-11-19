@@ -73,6 +73,82 @@ export function CalendarScreen() {
                     markingType={'period'}
                     markedDates={{
 
+                        //Seleção de dias de treino -Julho
+                        '2024-07-01': { startingDay: true, color: colors.roxo1, textColor: 'white' },
+                        '2024-07-02': { color: colors.roxo1, textColor: 'white' },
+                        '2024-07-03': { color: colors.roxo1, textColor: 'white' },
+                        '2024-07-04': { color: colors.roxo1, textColor: 'white' },
+                        '2024-07-05': { endingDay: true, color: colors.roxo1, textColor: 'white' },
+
+                        '2024-07-08': { startingDay: true, color: colors.roxo2, textColor: 'white' },
+                        '2024-07-09': { color: colors.roxo2, textColor: 'white' },
+                        '2024-07-10': { endingDay: true, color: colors.roxo2, textColor: 'white' },
+                        '2024-07-12': { startingDay: true, color: colors.roxo2, textColor: 'white' },
+                        '2024-07-13': { endingDay: true, color: colors.roxo2, textColor: 'white' },
+
+                        '2024-07-16': { startingDay: true, color: colors.roxo10, textColor: 'white' },
+                        '2024-07-17': { color: colors.roxo10, textColor: 'white' },
+                        '2024-07-18': { color: colors.roxo10, textColor: 'white' },
+                        '2024-07-19': { color: colors.roxo10, textColor: 'white' },
+                        '2024-07-20': { endingDay: true, color: colors.roxo10, textColor: 'white' },
+
+                        '2024-07-22': { startingDay: true, color: colors.roxo1, textColor: 'white' },
+                        '2024-07-23': { color: colors.roxo1, textColor: 'white' },
+                        '2024-07-24': { color: colors.roxo1, textColor: 'white' },
+                        '2024-07-25': { color: colors.roxo1, textColor: 'white' },
+                        '2024-07-26': { endingDay: true, color: colors.roxo1, textColor: 'white' },
+
+                        '2024-07-28': { startingDay: true, color: colors.roxo2, textColor: 'white' },
+                        '2024-07-29': { color: colors.roxo2, textColor: 'white' },
+                        '2024-07-30': { endingDay: true, color: colors.roxo2, textColor: 'white' },
+
+                        //Seleção dias de descanso - Julho
+                        '2024-07-06': { marked: true, dotColor: colors.laranja1 },
+                        '2024-07-11': { marked: true, dotColor: colors.laranja1 },
+                        '2024-07-14': { marked: true, dotColor: colors.laranja1 },
+                        '2024-07-15': { marked: true, dotColor: colors.laranja1 },
+                        '2024-07-21': { marked: true, dotColor: colors.laranja1 },
+                        '2024-07-27': { marked: true, dotColor: colors.laranja1 },
+                        '2024-07-31': { marked: true, dotColor: colors.laranja1 },
+
+                        //Seleção de dias de treino - Agosto
+                        '2024-08-01': { startingDay: true, color: colors.roxo2, textColor: 'white' },
+                        '2024-08-02': { color: colors.roxo2, textColor: 'white' },
+                        '2024-08-03': { endingDay: true, color: colors.roxo2, textColor: 'white' },
+                        '2024-08-05': { startingDay: true, color: colors.roxo1, textColor: 'white' },
+                        '2024-08-06': { color: colors.roxo1, textColor: 'white' },
+                        '2024-08-07': { color: colors.roxo1, textColor: 'white' },
+                        '2024-08-08': { color: colors.roxo1, textColor: 'white' },
+                        '2024-08-09': { endingDay: true, color: colors.roxo1, textColor: 'white' },
+
+                        '2024-08-12': { startingDay: true, color: colors.roxo10, textColor: 'white' },
+                        '2024-08-13': { endingDay: true, color: colors.roxo10, textColor: 'white' },
+                        '2024-08-15': { startingDay: true, color: colors.roxo10, textColor: 'white' },
+                        '2024-08-16': { endingDay: true, color: colors.roxo10, textColor: 'white' },
+
+                        '2024-08-19': { startingDay: true, color: colors.roxo2, textColor: 'white' },
+                        '2024-08-20': { color: colors.roxo2, textColor: 'white' },
+                        '2024-08-21': { color: colors.roxo2, textColor: 'white' },
+                        '2024-08-22': { color: colors.roxo2, textColor: 'white' },
+                        '2024-08-23': { color: colors.roxo2, textColor: 'white' },
+                        '2024-08-24': { endingDay: true, color: colors.roxo2, textColor: 'white' },
+
+                        '2024-08-27': { startingDay: true, color: colors.roxo1, textColor: 'white' },
+                        '2024-08-28': { color: colors.roxo1, textColor: 'white' },
+                        '2024-08-29': { color: colors.roxo1, textColor: 'white' },
+                        '2024-08-30': { endingDay: true, color: colors.roxo1, textColor: 'white' },
+
+                        //Seleção dias de descanso - Agosto
+                        '2024-08-04': { marked: true, dotColor: colors.laranja1 },
+                        '2024-08-10': { marked: true, dotColor: colors.laranja1 },
+                        '2024-08-11': { marked: true, dotColor: colors.laranja1 },
+                        '2024-08-17': { marked: true, dotColor: colors.laranja1 },
+                        '2024-08-18': { marked: true, dotColor: colors.laranja1 },
+                        '2024-08-25': { marked: true, dotColor: colors.laranja1 },
+                        '2024-08-31': { marked: true, dotColor: colors.laranja1 },
+                        '2024-08-14': { marked: true, dotColor: colors.laranja1 },
+                        '2024-08-26': { marked: true, dotColor: colors.laranja1 },
+
                         //Seleção de dias de treino --Setembro
                         '2024-09-02': { startingDay: true, color: colors.roxo1, textColor: 'white' },
                         '2024-09-03': { color: colors.roxo1, textColor: 'white' },
@@ -138,7 +214,6 @@ export function CalendarScreen() {
                         '2024-10-29': { color: colors.roxo1, textColor: 'white' },
                         '2024-10-30': { color: colors.roxo1, textColor: 'white', },
                         '2024-10-31': { color: colors.roxo1, textColor: 'white' },
-                        '2024-11-01': { endingDay: true, color: colors.roxo1, textColor: 'white' },
 
                         //Seleção dias de descanso --Outubro
                         '2024-10-20': { marked: true, dotColor: colors.laranja1 },
@@ -152,6 +227,36 @@ export function CalendarScreen() {
                         '2024-10-19': { marked: true, dotColor: colors.laranja1 },
                         '2024-11-03': { marked: true, dotColor: colors.laranja1 },
 
+                        //Seleção dias de treino -Novembro
+                        '2024-11-01': { endingDay: true, color: colors.roxo1, textColor: 'white' },
+                        '2024-11-04': { startingDay: true, color: colors.roxo2, textColor: 'white' },
+                        '2024-11-05': { color: colors.roxo2, textColor: 'white' },
+                        '2024-11-06': { endingDay: true, color: colors.roxo2, textColor: 'white' },
+                        '2024-11-08': { startingDay: true, color: colors.roxo2, textColor: 'white' },
+                        '2024-11-09': { endingDay: true, color: colors.roxo2, textColor: 'white' },
+
+                        '2024-11-11': { startingDay: true, color: colors.roxo10, textColor: 'white' },
+                        '2024-11-12': { endingDay: true, color: colors.roxo10, textColor: 'white' },
+                        '2024-11-14': { startingDay: true, color: colors.roxo10, textColor: 'white' },
+                        '2024-11-15': { color: colors.roxo10, textColor: 'white' },
+                        '2024-11-16': { endingDay: true, color: colors.roxo10, textColor: 'white' },
+
+                        '2024-11-18': { startingDay: true, color: colors.roxo1, textColor: 'white' },
+                        '2024-11-19': { color: colors.roxo1, textColor: 'white' },
+                        '2024-11-20': { color: colors.roxo1, textColor: 'white' },
+                        '2024-11-21': { color: colors.roxo1, textColor: 'white' },
+                        '2024-11-22': { endingDay: true, color: colors.roxo1, textColor: 'white' },
+
+                        '2024-11-25': { startingDay: true, color: colors.roxo2, textColor: 'white' },
+                        '2024-11-26': { endingDay: true, color: colors.roxo2, textColor: 'white' },
+
+                        //Seleção dias de descanso --Novembro
+                        '2024-11-07': { marked: true, dotColor: colors.laranja1 },
+                        '2024-11-10': { marked: true, dotColor: colors.laranja1 },
+                        '2024-11-13': { marked: true, dotColor: colors.laranja1 },
+                        '2024-11-17': { marked: true, dotColor: colors.laranja1 },
+                        '2024-11-23': { marked: true, dotColor: colors.laranja1 },
+                        '2024-11-24': { marked: true, dotColor: colors.laranja1 },
                     }}
                 />
 
@@ -185,18 +290,19 @@ const styles = StyleSheet.create({
     },
     titleHeader: {
         color: colors.white,
-    fontSize: 21,
-    fontFamily: fonts.SemiBold,
-    textAlign: 'center',
-    marginTop: 10,
-    marginLeft: 90,
+        fontSize: 21,
+        fontFamily: fonts.SemiBold,
+        textAlign: 'center',
+        marginTop: 10,
+        marginLeft: 90,
     },
     calendar: {
+        marginTop: 6,
         backgroundColor: "transparent",
     },
     subTitle: {
         textAlign: 'center',
-        marginTop: 30,
+        marginTop: 50,
         padding: 30,
         fontSize: 16,
         fontFamily: fonts.Light,
@@ -204,10 +310,10 @@ const styles = StyleSheet.create({
     },
     title: {
         textAlign: 'center',
-        marginTop: 10,
+        marginTop: 20,
         fontSize: 20,
         fontFamily: fonts.Regular,
-        color: colors.roxo3,
+        color: colors.laranjaDetalhe,
     },
 }
 )

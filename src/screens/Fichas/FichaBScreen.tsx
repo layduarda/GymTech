@@ -44,6 +44,21 @@ export function FichaBScreen() {
                         Bíceps e Costa + Abdômen
                     </Text>
 
+                    <View style={styles.cont2}>
+                        <Text style={styles.textExercicios}>
+                            - Rosca direta com barra reta/halteres
+                        </Text>
+                        <Text style={styles.textExercicios}>
+                            - Martelo em pé
+                        </Text>
+                        <Text style={styles.textExercicios}>
+                            - Rosca alternada com banco inclinado
+                        </Text>
+                        <Text style={styles.textExercicios}>
+                            - Rosca scott barra W
+                        </Text>
+                    </View>
+
                     <View style={styles.cont1}>
                         <Text style={styles.textExercicios}>
                             - Puxador (pulley) Frontal
@@ -56,20 +71,6 @@ export function FichaBScreen() {
                         </Text>
                     </View>
 
-                    <View style={styles.cont2}>
-                        <Text style={styles.textExercicios}>
-                            - Rosca direta com barra reta
-                        </Text>
-                        <Text style={styles.textExercicios}>
-                            - Martelo em pé
-                        </Text>
-                        <Text style={styles.textExercicios}>
-                            - Rosca alternada com banco inclinado
-                        </Text>
-                        <Text style={styles.textExercicios}>
-                            - Rosca scott barra W
-                        </Text>
-                    </View>
                     <View style={styles.cont3}>
                         <Text style={styles.textExercicios}>
                             - Flexão do tronco (abdominal supra)
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
         color: colors.white,
         textAlign: 'center',
         padding: 12,
-        fontFamily: fonts.SemiBold,
+        fontFamily: fonts.Regular,
     },
     iconEdit: {
     },

@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         color: colors.white,
         textAlign: 'center',
         padding: 12,
-        fontFamily: fonts.SemiBold,
+        fontFamily: fonts.Regular,
     },
     iconEdit: {
     },

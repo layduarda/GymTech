@@ -3,6 +3,7 @@
     "name": "GymTech",
     "slug": "GymTech",
     "version": "1.0.0",
+    "newArchEnabled": true,
     "android": {
       "package": "dev.ecavalcanti.GymTech",
       "userInterfaceStyle": "automatic"

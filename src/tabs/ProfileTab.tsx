@@ -1,69 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView } from 'react-native';
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { colors } from '../utils/colors';
 import { fonts } from '../utils/fonts';
 
-import { useNavigation } from '@react-navigation/native';
-import { ListaHorizontal } from '../components/ListaHorizontal';
 
+import { signOut } from 'firebase/auth';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { AppBar } from '../components/app.bar';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import auth from '@react-native-firebase/auth';
+import { auth } from '../firebase';
+import { UserDetails } from '../models/UserDetails';
+import { UserDetailsService } from '../services/user-service';
 
 export function ProfileTab() {
-    const navigation = useNavigation();
-    const [secureEntery, setSecureEntery] = useState(true);
+    const [profile, setProfile] = useState<UserDetails | undefined>(undefined);
+    const service = new UserDetailsService();
 
+    useEffect(() => {
+        service.findByUserId(auth.currentUser.uid).then((u) => {
+            if (u) setProfile(u)
+        });
+    }, [])
 
-    const handleTreino = () => {
-        //@ts-ignore
-        navigation.navigate('fichaD')
+    const handleLogOut = async () => {
+        await signOut(auth);
     };
-
-    const handleFeed = () => {
-        //@ts-ignore
-        navigation.navigate('feed')
-    };
-
-    const handleAgenda = () => {
-        //@ts-ignore
-        navigation.navigate('agenda')
-    };
-
-    // const router = router();
-
-    function handleLogOut() {
-        const handleSignOut = () => {
-            auth()
-                .signOut()
-                .then(() => {
-                    alert('Você desconectou-se do sistema!');
-                    // router.replace('/');
-                })
-                .catch((error) => {
-                    const errorMessage = error.errorMessage;
-                    alert(errorMessage);
-                })
-
-        }
-    }
-    const insets = useSafeAreaInsets();
 
     return (
-        <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 60 }}>
+        <ScrollView style={styles.container}>
             <AppBar title="" />
             <View style={styles.containerProfile}>
-                <Text style={styles.titleProfile}>
-                    Perfil
-                </Text>
-                <TouchableOpacity style={styles.iconEdit}>
-                    <Ionicons name={"create-outline"} size={24}
-                        color={colors.laranjaDetalhe} />
-                </TouchableOpacity>
 
                 <View style={styles.fotoProfile}>
                     <ImageBackground
@@ -73,22 +40,16 @@ export function ProfileTab() {
                     </ImageBackground>
                 </View>
 
-                <View style={styles.textProfile}>
-                    <Text style={styles.title}>
-                        Nome completo:
-                    </Text>
-                    <Text style={styles.textP}>
-                        Layslla Eduarda Oreti dos Santos
-                    </Text>
-                    <View style={styles.linhaText}></View>
-                </View>
+                <Text style={styles.titleProfile}>
+                    {auth.currentUser.displayName}
+                </Text>
 
                 <View style={styles.textProfile}>
                     <Text style={styles.title}>
                         Data de nascimento:
                     </Text>
                     <Text style={styles.textP}>
-                        10/07/2006
+                        {profile && profile.dateOfBirth}
                     </Text>
                     <View style={styles.linhaText}></View>
                 </View>
@@ -191,16 +152,17 @@ export function ProfileTab() {
                         Sim
                     </Text>
                 </View>
+            </View>
 
-                <View style={styles.campLogOut}>
-                    <TouchableOpacity style={styles.buttonLogOut}
-                        onPress={handleLogOut}
-                    >
-                        <Text style={styles.textLogOut}>
-                            Log Out
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+            <View style={styles.campLogOut}>
+                <TouchableOpacity style={styles.buttonLogOut}
+                    onPress={handleLogOut}
+                >
+                    <Text style={styles.textLogOut}>
+                        Log Out
+                    </Text>
+                    <Ionicons name={"log-out-outline"} size={28} color={colors.white} style={styles.iconLogOut} />
+                </TouchableOpacity>
             </View>
         </ScrollView>
     );
@@ -210,11 +172,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.white,
-        paddingBottom: 200,
     },
     containerProfile: {
         width: "90%",
-        height: "90%",
+        height: "80%",
         backgroundColor: colors.fundo,
         marginLeft: 22,
         marginRight: 10,
@@ -225,27 +186,26 @@ const styles = StyleSheet.create({
         paddingBottom: 90,
     },
     titleProfile: {
-        paddingTop: 20,
         textAlign: 'center',
-        fontSize: 25,
+        fontSize: 18,
         fontFamily: fonts.SemiBold,
         color: colors.laranjaDetalhe,
-        marginBottom: 10,
+        marginBottom: 20,
+        marginTop: 10,
     },
     fotoProfile: {
         height: 90,
-        marginTop: 5,
+        marginTop: 30,
         marginBottom: 50,
         alignItems: 'center',
-        marginRight: 120,
+        marginRight: "35%",
     },
     coverImage: {
         borderWidth: 2.4,
         borderColor: colors.roxo3,
         borderRadius: 100,
-        height: 110,
-        width: 110,
-        alignItems: 'center',
+        height: 130,
+        width: 130,
     },
     textProfile: {
     },
@@ -273,29 +233,30 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         marginRight: 30,
     },
-    iconEdit: {
-        alignItems: 'center',
-        marginBottom: 10,
-    },
     campLogOut: {
-        marginTop: 30,
+        marginBottom: 20,
         alignItems: 'center',
     },
     buttonLogOut: {
-        backgroundColor: colors.laranja1,
-        width: "90%",
-        height: 55,
+        backgroundColor: colors.laranjaDetalhe,
+        width: "88%",
+        height: 43,
         borderWidth: 2,
-        justifyContent: 'center',
-        borderColor: colors.laranjaDetalhe,
+        flexDirection: 'row',
+        borderColor: colors.laranja8,
         borderRadius: 30,
         marginTop: 18,
     },
     textLogOut: {
-        fontSize: 20,
         color: colors.white,
-        textAlign: 'center',
-        padding: 12,
-        fontFamily: fonts.SemiBold,
+        fontSize: 20,
+        fontFamily: fonts.Regular,
+        textAlign: "center",
+        padding: 6,
+        marginLeft: "35%",
+    },
+    iconLogOut: {
+        padding: 6,
+        marginLeft: "0%",
     },
 });

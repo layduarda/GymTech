@@ -5,11 +5,10 @@
 // }
 
 export type UserDetails = {
-    dateOfBirth: string;
-    //objective: ObjectiveType;
+    userId: string;
+    dateOfBirth: any;
     peso: string;
     altura: string;
-    daysOfTheWeek: string;
     chronicDisease: string;
     surgery: string;
     injury: string;

@@ -9,6 +9,10 @@ export const colors = {
     fundo2: '#c0c0c0', //Segunda opção de fundo
     fundo3: '#d7d7d7', //Terceira opção de fundo
     fundo4: '#dfdfdf', //Quarta opção de fundo
+    fundo5: '#808080', //Quinta opção de fundo
+    vermelho1: '#8d0e08', //Botão log out
+    vermelho2: '#ce2a17', // Botão log out
+    vermelho3: '#eb3e23', // Botão log out
 
     //Paleta de roxos
     roxo1: '#7e097e', //Roxo escuro bottom1

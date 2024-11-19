@@ -28,7 +28,7 @@ import { FichaDScreen } from './src/screens/Fichas/FichaDScreen';
 import { FichaEScreen } from './src/screens/Fichas/FichaEScreen';
 import { loadFonts } from './src/utils/fonts';
 
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './src/firebase';
 import { ProfileTab } from './src/tabs/ProfileTab';
 
@@ -65,11 +65,17 @@ const UnauthenticatedStack = () => (
 
 const App = () => {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    loadFonts().catch((e) => {
-      console.error("Failed to load fonts");
-    });
+    loadFonts()
+      .then(() => {
+        console.log("Fonts loadded");
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        console.error("Failed to load fonts");
+      });
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
@@ -77,6 +83,8 @@ const App = () => {
 
     return unsubscribe;
   }, []);
+
+  // if (isLoading) return <View><Text>Loading...</Text></View>
 
   return (
     <NavigationContainer>

@@ -32,11 +32,6 @@ export const LoginScreen = () => {
     try {
       const credential = await signInWithEmailAndPassword(auth, email, password);
       console.log("store in storage", credential.user.getIdToken());
-
-
-      //@ts-ignore
-      navigation.navigate('main')
-
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;

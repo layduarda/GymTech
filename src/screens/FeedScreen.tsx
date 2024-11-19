@@ -72,6 +72,12 @@ export function FeedScreen() {
                 </Text>
             </View>
             <View style={styles.container}>
+            <Text style={styles.title}>
+                    Feed e Galeria pessoal
+                </Text>
+                <Text style={styles.subTitle}>
+                Registre seu progresso com fotos para promover uma evolução contínua e consistente
+                </Text>
 
                 <View style={styles.containerFoto}>
                     <View style={styles.containerBottom}>
@@ -220,6 +226,22 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    title: {
+        textAlign: 'center',
+        marginTop: 40,
+        fontSize: 20,
+        fontFamily: fonts.Regular,
+        color: colors.laranjaDetalhe,
+    },
+    subTitle: {
+        textAlign: 'center',
+        paddingLeft: 20,
+        paddingRight: 20,
+        marginTop: 20,
+        fontSize: 16,
+        fontFamily: fonts.Light,
+        color: colors.roxo3,
     },
     backButtonWrapper: {
         height: 50,
